@@ -180,16 +180,53 @@
     }
 
     function enviarDatos() {
-      const codigo = document.getElementById('codigo').value.trim();
-      const usuario = document.getElementById('usuario').value;
-      const tipo = document.getElementById('tipo').value;
-      const centro = document.getElementById('centro').value.trim();
-      const cantidad = document.getElementById('cantidad').value;
+  const codigo = document.getElementById('codigo').value.trim();
+  const usuario = document.getElementById('usuario').value;
+  const tipo = document.getElementById('tipo').value;
+  const centro = document.getElementById('centro').value.trim();
+  const cantidad = document.getElementById('cantidad').value;
 
-      if (!codigo || !usuario || !tipo || !cantidad) {
-        showMessage("❌ Completa todos los campos obligatorios", "error");
-        return;
-      }
+  if (!codigo || !usuario || !tipo || !cantidad) {
+    showMessage("❌ Completa todos los campos obligatorios", "error");
+    return;
+  }
+
+  const webhook = "https://eowfzzj93qwene0.m.pipedream.net";
+
+  const datos = {
+    codigo: codigo,
+    usuario: usuario,
+    tipo: tipo,
+    centro: centro || "—",
+    cantidad: parseInt(cantidad, 10)
+  };
+
+  fetch(webhook, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(datos)
+  })
+  .then(response => {
+    if (response.ok) {
+      showMessage("✅ ¡Registro enviado correctamente!", "success");
+      // Limpiar
+      document.getElementById('codigo').value = '';
+      document.getElementById('usuario').value = '';
+      document.getElementById('tipo').value = '';
+      document.getElementById('centro').value = '';
+      document.getElementById('cantidad').value = '';
+      document.getElementById('enviar').disabled = true;
+    } else {
+      return response.text().then(text => { throw new Error(text); });
+    }
+  })
+  .catch(err => {
+    console.error("Error:", err);
+    showMessage("❌ Error: " + err.message, "error");
+  });
+}
 
       // 🔗 Aquí irá tu enlace de Power Automate (más adelante)
     const webhook = "https://eowfzzj93qwene0.m.pipedream.net";
