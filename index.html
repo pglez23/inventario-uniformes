@@ -141,8 +141,8 @@
         return;
       }
 
-      // TU URL DE DESTINO (reemplaza con una que funcione)
-      const webhook = "https://script.google.com/macros/s/AKfycbybs3ygWg8HcMcwgFkfktAVr26a_jElBdPwaLHVLVvP8QqPgSl_bRxau2I3Hg-mGXbqiw/exec?callback=?";
+      // 🔗 CAMBIA ESTA URL POR TU ENDPOINT FINAL
+      const webhook = "https://webhook.site/tu-uuid-aqui";
 
       const payload = {
         codigo: codigo,
@@ -155,11 +155,10 @@
       logMsg("Enviando datos: " + JSON.stringify(payload));
 
       fetch(webhook, {
-  method: 'POST',
-  mode: 'no-cors', // Solo para diagnóstico
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(payload)
-})
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
       .then(response => {
         logMsg("Respuesta HTTP: " + response.status);
         if (response.ok) {
