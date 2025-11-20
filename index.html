@@ -154,11 +154,14 @@
 
       logMsg("Enviando datos: " + JSON.stringify(payload));
 
-      fetch(webhook, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
+   fetch(webhook, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    codigo: "...",
+    usuario: "...",
+    // etc.
+  })
       .then(response => {
         logMsg("Respuesta HTTP: " + response.status);
         if (response.ok) {
